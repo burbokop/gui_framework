@@ -10,7 +10,9 @@ use sdl2::keyboard::Keycode;
 use sdl2::pixels::Color;
 
 #[derive(Default, Debug)]
-struct RootItem {}
+struct RootItem {
+    pub sss: i32
+}
 
 impl Item for RootItem {}
 
@@ -20,11 +22,15 @@ fn main() {
         .with_child(
             ItemHandle::<Rectangle>::default()
                 .with_geometry2d(Vec2d::new(100., 100.), Vec2d::new(200., 200.))
-                .with_child(
-                    ItemHandle::<Button>::default()
-                        .with_geometry2d(Vec2d::new(10., 50.), Vec2d::new(180., 50.))
+                .with(|parent| {
+                    let o = ItemHandle::<Button>::default()
+                        .with_geometry2d(Vec2d::new(10., 50.), Vec2d::new(180., 50.));
 
-                )
+                    
+
+                    root.sss;
+                    o
+                })
         );
 
 
