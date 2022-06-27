@@ -1,9 +1,10 @@
 
+use std::ops::DerefMut;
 use std::time::Duration;
 
 use gui_app::core::geometry::Vec2d;
+use gui_app::core::item::{Item, ItemHandle, ItemHandleBase};
 use gui_app::items::{Rectangle, ColumnLayout, Button};
-use gui_app::core::{Item, ItemHandle, ItemHandleBase};
 use gui_app::sdl2impl;
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
@@ -12,26 +13,62 @@ use sdl2::pixels::Color;
 #[derive(Default, Debug)]
 struct RootItem {
     pub sss: i32
+
+}
+
+impl RootItem {
+    pub fn do_action(self: &mut Self) {
+        println!("AAAAAAAAction");
+    }
 }
 
 impl Item for RootItem {}
 
 fn main() {
 
-    let root: ItemHandle<RootItem> = ItemHandle::default()
-        .with_child(
-            ItemHandle::<Rectangle>::default()
+    let root: ItemHandle<RootItem> = ItemHandle::<RootItem>::default()
+        .with::<Rectangle, _>(|root|{
+            let r = ItemHandle::<Rectangle>::default()
                 .with_geometry2d(Vec2d::new(100., 100.), Vec2d::new(200., 200.))
                 .with(|parent| {
-                    let o = ItemHandle::<Button>::default()
+                    let mut button = ItemHandle::<Button>::default()
                         .with_geometry2d(Vec2d::new(10., 50.), Vec2d::new(180., 50.));
 
-                    
 
-                    root.sss;
-                    o
-                })
-        );
+                        let mut x = 0;
+                        let x_ref = &mut x;
+
+                        trait AAA {
+                            fn aaa(self: &mut Self) {
+
+                            }
+                        }
+                        impl AAA for i32 {
+                            fn aaa(self: &mut Self) {
+
+                            }
+                        }
+
+                        let mut mm2 = || x_ref.aaa();
+
+                        let mut mmm = || root.deref_mut();
+                        
+                        mm2();
+                        mmm();
+
+                        button.clicked(||{
+                            root.do_action();
+                        });
+
+
+                        let s = &root.sss;
+
+
+                    //root.sss;
+                    button
+                });
+                r
+        });
 
 
     println!("root:\n{:?}", root);

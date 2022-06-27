@@ -1,5 +1,5 @@
 
-use crate::core::{Item, geometry::Vec2d};
+use crate::core::{item::Item, geometry::Vec2d};
 
 
 
@@ -27,7 +27,7 @@ impl Rectangle {
 }
 
 impl Item for Rectangle {
-    fn paint(&self, handle: &dyn crate::core::ItemHandleBase, painter: &mut dyn crate::core::graphics::Painter) {
+    fn paint(&self, handle: &dyn crate::core::item::ItemHandleBase, painter: &mut dyn crate::core::graphics::Painter) {
         painter.set_color(self.color);
         painter.set_fill(true);
         painter.draw_rect(Vec2d::new(0., 0.), handle.size2d());
@@ -67,8 +67,15 @@ pub struct Button {
 
 }
 
+impl Button {
+
+    pub fn clicked<F: FnMut()>(&mut self, f: F) {
+
+    }
+}
+
 impl Item for Button {
-    fn paint(&self, h: &dyn crate::core::ItemHandleBase, p: &mut dyn crate::core::graphics::Painter) {
+    fn paint(&self, h: &dyn crate::core::item::ItemHandleBase, p: &mut dyn crate::core::graphics::Painter) {
         let margin = Vec2d::new(h.size().y / 15., h.size().y / 15.);
         p.set_fill(true);
         p.set_color(0xaaaaaaaa);

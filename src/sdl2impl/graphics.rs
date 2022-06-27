@@ -24,12 +24,12 @@ impl<'a, T: sdl2::render::RenderTarget> From<sdl2::render::Canvas<T>> for Render
 
 impl<'a, T: sdl2::render::RenderTarget> CoreRenderer for Renderer<T> {
     fn move_pen(&mut self, vec: crate::core::geometry::Vec3d) {
-        println!("move: {}", vec);
+        //println!("move: {}", vec);
         self.painter.position = self.painter.position.clone().add(vec);
     }
 
     fn set_bounds(&mut self, wh: crate::core::geometry::Vec3d) {
-        println!("set_bounds: {}", wh);
+        //println!("set_bounds: {}", wh);
         self.painter.bounds = wh
     }
 
@@ -61,7 +61,7 @@ impl<T: sdl2::render::RenderTarget> CorePainter for Painter<T> {
         
 
         
-        println!("bound_rect: {:?}", self.bound_rect());
+        //println!("bound_rect: {:?}", self.bound_rect());
 
 
         self.cws.set_clip_rect(self.bound_rect());
@@ -74,7 +74,7 @@ impl<T: sdl2::render::RenderTarget> CorePainter for Painter<T> {
             size.y as u32
         );
 
-        println!("draw_rect: {:?}", rect);
+        //println!("draw_rect: {:?}", rect);
 
 
         if self.fill {
